@@ -3,5 +3,12 @@ name = "andar"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.10"
+dependencies = [
+    "typing-extensions>=4.15.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.10",
+]
