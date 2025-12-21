@@ -1,3 +1,4 @@
-from andar.path_builder import FieldConf, PathBuilder, SafePatterns
+from andar.field_conf import FieldConf, SafePatterns
+from andar.path_model import PathModel
 
-__all__ = ["SafePatterns", "FieldConf", "PathBuilder"]
+__all__ = ["SafePatterns", "FieldConf", "PathModel"]

@@ -353,6 +353,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
     
@@ -409,14 +415,98 @@
   
   
     <li class="md-nav__item">
-      <a href="reference/andar/path_builder/" class="md-nav__link">
+      <a href="reference/andar/check_utils/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    path_builder
+    check_utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/andar/field_conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    field_conf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/andar/parser_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parser_utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reference/andar/path_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    path_model
   
 
     
@@ -511,32 +601,39 @@
 
 
 <h1 id="welcome-to-andar-docs">Welcome to Andar Docs</h1>
-<p>Andar module implement a PathBuilder class that allows to define, create and parse templated paths.</p>
+<p>Andar module implement a PathModel class that allows to define, build and parse templated file paths.</p>
 <h2 id="project-overview">Project Overview</h2>
 <h2 id="example-usage">Example usage:</h2>
-<pre><code class="language-python">from andar import PathBuilder
+<pre><code class="language-python">from andar import PathModel
 
 # Simple definition, using automatic definition of fields
-simple_path_builder = PathBuilder(template=&quot;{base_folder}/{intermediate_folder}/{base_name}_{suffix}.{extension}&quot;)
+simple_path_model = PathModel(template=&quot;/{base_folder}/{subfolder}/{base_name}__{suffix}.{extension}&quot;)
 
-result_path = simple_path_builder.get_path(
+# Generate a path:
+result_path = simple_path_model.get_path(
     base_folder=&quot;parent_folder&quot;,
-    intermediate_folder=&quot;other_folder&quot;,
+    subfolder=&quot;other_folder&quot;,
     base_name=&quot;mydata&quot;,
     suffix=&quot;2000-01-01&quot;,
     extension=&quot;csv&quot;,
 )
-print(result_path)  # &quot;parent_folder/other_folder/mydata_2000-01-01.csv&quot;
+print(result_path)  
+# Result:
+# &quot;/parent_folder/other_folder/mydata__2000-01-01.csv&quot;
 
-result_parent_path = simple_path_builder.get_parent_path(
-    base_folder=&quot;parent_folder&quot;,
-    intermediate_folder=&quot;other_folder&quot;,
-)
-print(result_parent_path)  # &quot;parent_folder/other_folder&quot;
-
-file_path = &quot;parent_folder/other_folder/mydata_2000-01-01.csv&quot;
-parsed_fields = simple_path_builder.parse_file_path(file_path)
+# Parse a path:
+file_path = &quot;/data/reports/summary__2025-12-31.csv&quot;
+parsed_fields = simple_path_model.parse_path(file_path)
 print(parsed_fields)
+
+# Result:
+# {
+#     'base_folder': 'data', 
+#     'subfolder': 'reports', 
+#     'base_name': 'summary', 
+#     'suffix': '2025-12-31', 
+#     'extension': 'csv',
+# }
 
 </code></pre>
 

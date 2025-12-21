@@ -1,0 +1,59 @@
+from collections.abc import Callable
+from dataclasses import dataclass, replace
+
+from typing_extensions import Self
+
+
+class SafePatterns:
+    """
+    Non-greedy patterns
+    """
+
+    FILENAME = r"[-_.a-zA-Z0-9]+?"  # include filename separators: -_.
+    DIRPATH = r"[-_.a-zA-Z0-9/]+?"  # include filename separators: -_. and directory separator: /
+    FIELD = r"[a-zA-Z0-9]+?"  # without separator characters
+    EXTENSION = r"[.a-zA-Z0-9]+?"  # include dots for sub extensions as 'tar.gz'
+
+
+@dataclass
+class FieldConf:
+    """
+    FieldConf allows to configure how a path field is validated, parsed and processed
+
+    :param pattern: is used for validate input of get_path and get_parent_path, and also for getting fields using
+                    parse_path. By default, it used SafePatterns.FILENAME.
+    :param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a
+                        string or a datetime object that can be formated to an input string for a the given template.
+                        They are also used for validating the parsed field when using parse_path and for defining how
+                        to cast the string (to date or to datetime, depending on the argument that was used).
+    :param datetime_format: See description of date_format parameter.
+    :param is_optional: allows to omit a field during the path generation (get_path and get_parent_path)
+                        or to skip field during the path parsing. IMPORTANT! in order to work properly, pattern must
+                        be constrained, otherwise the PathModel class may have an unexpected behaviour.
+                        For example use '[0-9]{4}' and avoid using '*' or '+' when using is_optional=True.
+    """
+
+    pattern: str = SafePatterns.FILENAME
+    date_format: str | None = None
+    datetime_format: str | None = None
+    is_optional: bool | None = False
+    str_to_var: Callable | None = None
+    var_to_str: Callable | None = None
+
+    def __post_init__(self):
+        has_date_converter = self.date_format is not None
+        has_datetime_converter = self.datetime_format is not None
+        has_custom_converter = self.var_to_str is not None or self.str_to_var is not None
+        active_converters_num = sum([has_date_converter, has_datetime_converter, has_custom_converter])
+        if active_converters_num > 1:
+            raise ValueError(f"Maximum one field converter is allowed, but {active_converters_num} were found")
+
+    def replace(self, **kwargs) -> Self:
+        """
+        Creates a copy of the current object replacing attributes with the given keyword arguments
+
+        :param kwargs: Attributes to be replaced
+        :return: An FieldConf object with the attributes replaced
+        """
+        field_conf = replace(self, **kwargs)
+        return field_conf
