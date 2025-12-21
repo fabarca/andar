@@ -1,0 +1,12 @@
+site_name: Andar Docs
+site_url: https://fabarca.github.io/andar/
+theme:
+  name: material
+  features:
+    - navigation.indexes
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+  - api-autonav:
+      modules: ['andar']
