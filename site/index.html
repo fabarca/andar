@@ -601,7 +601,7 @@
 
 
 <h1 id="welcome-to-andar-docs">Welcome to Andar Docs</h1>
-<p>Andar module implement a PathModel class that allows to define, build and parse templated file paths.</p>
+<p>Andar package implements a PathModel class that allows to define, build and parse templated file paths.</p>
 <h2 id="project-overview">Project Overview</h2>
 <h2 id="example-usage">Example usage:</h2>
 <pre><code class="language-python">from andar import PathModel
@@ -617,7 +617,7 @@ result_path = simple_path_model.get_path(
     suffix=&quot;2000-01-01&quot;,
     extension=&quot;csv&quot;,
 )
-print(result_path)  
+print(result_path)
 # Result:
 # &quot;/parent_folder/other_folder/mydata__2000-01-01.csv&quot;
 

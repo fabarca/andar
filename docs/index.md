@@ -1,7 +1,7 @@
 # Welcome to Andar Docs
 
 
-Andar module implement a PathModel class that allows to define, build and parse templated file paths.
+Andar package implements a PathModel class that allows to define, build and parse templated file paths.
 
 ## Project Overview
 
@@ -22,7 +22,7 @@ result_path = simple_path_model.get_path(
     suffix="2000-01-01",
     extension="csv",
 )
-print(result_path)  
+print(result_path)
 # Result:
 # "/parent_folder/other_folder/mydata__2000-01-01.csv"
 

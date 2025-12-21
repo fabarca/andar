@@ -693,9 +693,9 @@
         <p>FieldConf allows to configure how a path field is validated, parsed and processed</p>
 <p>:param pattern: is used for validate input of get_path and get_parent_path, and also for getting fields using
                 parse_path. By default, it used SafePatterns.FILENAME.
-:param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a 
-                    string or a datetime object that can be formated to an input string for a the given template. 
-                    They are also used for validating the parsed field when using parse_path and for defining how 
+:param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a
+                    string or a datetime object that can be formated to an input string for a the given template.
+                    They are also used for validating the parsed field when using parse_path and for defining how
                     to cast the string (to date or to datetime, depending on the argument that was used).
 :param datetime_format: See description of date_format parameter.
 :param is_optional: allows to omit a field during the path generation (get_path and get_parent_path)
@@ -712,8 +712,7 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>andar/field_conf.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
-<span class="normal">18</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">18</span>
 <span class="normal">19</span>
 <span class="normal">20</span>
 <span class="normal">21</span>
@@ -754,17 +753,16 @@
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@dataclass</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">FieldConf</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    FieldConf allows to configure how a path field is validated, parsed and processed</span>
 
 <span class="sd">    :param pattern: is used for validate input of get_path and get_parent_path, and also for getting fields using</span>
 <span class="sd">                    parse_path. By default, it used SafePatterns.FILENAME.</span>
-<span class="sd">    :param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a </span>
-<span class="sd">                        string or a datetime object that can be formated to an input string for a the given template. </span>
-<span class="sd">                        They are also used for validating the parsed field when using parse_path and for defining how </span>
+<span class="sd">    :param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a</span>
+<span class="sd">                        string or a datetime object that can be formated to an input string for a the given template.</span>
+<span class="sd">                        They are also used for validating the parsed field when using parse_path and for defining how</span>
 <span class="sd">                        to cast the string (to date or to datetime, depending on the argument that was used).</span>
 <span class="sd">    :param datetime_format: See description of date_format parameter.</span>
 <span class="sd">    :param is_optional: allows to omit a field during the path generation (get_path and get_parent_path)</span>
@@ -786,9 +784,7 @@
         <span class="n">has_custom_converter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_to_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">str_to_var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="n">active_converters_num</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">has_date_converter</span><span class="p">,</span> <span class="n">has_datetime_converter</span><span class="p">,</span> <span class="n">has_custom_converter</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">active_converters_num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Maximum one field converter is allowed, but </span><span class="si">{</span><span class="n">active_converters_num</span><span class="si">}</span><span class="s2"> were found&quot;</span>
-                <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Maximum one field converter is allowed, but </span><span class="si">{</span><span class="n">active_converters_num</span><span class="si">}</span><span class="s2"> were found&quot;</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -833,15 +829,15 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>andar/field_conf.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
+<span class="normal">52</span>
 <span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
 <span class="normal">56</span>
 <span class="normal">57</span>
 <span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Self</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a copy of the current object replacing attributes with the given keyword arguments</span>
 
@@ -890,15 +886,15 @@
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>andar/field_conf.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 6</span>
-<span class="normal"> 7</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span>
-<span class="normal">14</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SafePatterns</span><span class="p">:</span>
+<span class="normal">14</span>
+<span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SafePatterns</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Non-greedy patterns</span>
 <span class="sd">    &quot;&quot;&quot;</span>
