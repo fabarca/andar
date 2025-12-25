@@ -21,7 +21,9 @@ Simple PathModel definition using default field configurations:
 ```python
 from andar import PathModel
 
-simple_path_model = PathModel(template="/{base_folder}/{subfolder}/{base_name}__{suffix}.{extension}")
+simple_path_model = PathModel(
+    template="/{base_folder}/{subfolder}/{base_name}__{suffix}.{extension}"
+)
 ```
 Generate a path:
 ```python

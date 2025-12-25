@@ -1,12 +1,24 @@
 site_name: Andar Docs
-site_url: https://fabarca.github.io/andar/
+site_url: https://fabarca.github.io/andar
+repo_url: https://github.com/fabarca/andar
+repo_name: fabarca/andar
 theme:
   name: material
   features:
     - navigation.indexes
+    - content.code.copy
 plugins:
   - search
   - mkdocstrings:
       default_handler: python
   - api-autonav:
       modules: ['andar']
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
