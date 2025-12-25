@@ -1,7 +1,6 @@
 from collections.abc import Callable
 from dataclasses import dataclass, replace
-
-from typing_extensions import Self
+from typing import Self
 
 
 class SafePatterns:

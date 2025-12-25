@@ -1,7 +1,5 @@
 import os.path
-from typing import Any
-
-from typing_extensions import Self
+from typing import Any, Self
 
 from andar.check_utils import check_expected_fields, check_parent_path_template
 from andar.field_conf import FieldConf
