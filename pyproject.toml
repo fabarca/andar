@@ -1,7 +1,7 @@
 [project]
 name = "andar"
-version = "0.1.0"
-description = "Andar package implements a PathModel class that allows to define, build and parse templated file paths."
+version = "0.1.1"
+description = "Andar is a python package that provides an abstraction layer for managing path structures, helping to create paths and parse them in a programatic way via templated file paths."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
@@ -9,6 +9,7 @@ dependencies = []
 [project.urls]
 repository = "https://github.com/fabarca/andar"
 issues = "https://github.com/fabarca/andar/issues"
+documentation = "https://fabarca.github.io/andar"
 
 [tool.setuptools.packages.find]
 include = ["andar"]
