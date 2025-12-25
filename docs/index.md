@@ -4,7 +4,7 @@
 > 
 > Antonio Machado
 
-Andar is a python package the provides an abstraction layer for managing path structures, helping to create paths and parse them in a programatic way via templated file paths.
+Andar is a python package that provides an abstraction layer for managing path structures, helping to create paths and parse them in a programatic way via templated file paths.
 
 
 ## Install Package
