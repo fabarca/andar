@@ -9,8 +9,9 @@ class SafePatterns:
     Non-greedy patterns
     """
 
-    FILENAME = r"[-_.a-zA-Z0-9]+?"  # include filename separators: -_.
-    DIRPATH = r"[-_.a-zA-Z0-9/]+?"  # include filename separators: -_. and directory separator: /
+    FILENAME = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
+    FOLDER = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
+    DIRPATH = r"[-_.a-zA-Z0-9/]+?"  # include name separators: -_. and directory separator: /
     FIELD = r"[a-zA-Z0-9]+?"  # without separator characters
     EXTENSION = r"[.a-zA-Z0-9]+?"  # include dots for sub extensions as 'tar.gz'
 
