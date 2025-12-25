@@ -41,7 +41,7 @@ class PathModelTests(unittest.TestCase):
                 "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
                 "intermediate_folder": FieldConf(pattern=r"\d{4}-\d{2}-\d{2}", date_format="%Y-%m-%d"),
                 "base_name": FieldConf(
-                    pattern=SafePatterns.FILENAME,
+                    pattern=SafePatterns.NAME,
                     var_to_str=str.upper,
                     str_to_var=str.lower,
                 ),
@@ -159,7 +159,7 @@ class PathModelTests(unittest.TestCase):
                 "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
                 "intermediate_folder": FieldConf(pattern=r"\d{4}-\d{2}-\d{2}", date_format="%Y-%m-%d"),
                 "base_name": FieldConf(
-                    pattern=SafePatterns.FILENAME,
+                    pattern=SafePatterns.NAME,
                     var_to_str=str.upper,
                     str_to_var=str.lower,
                 ),

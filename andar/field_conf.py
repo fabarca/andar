@@ -8,8 +8,7 @@ class SafePatterns:
     Non-greedy patterns
     """
 
-    FILENAME = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
-    FOLDER = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
+    NAME = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
     DIRPATH = r"[-_.a-zA-Z0-9/]+?"  # include name separators: -_. and directory separator: /
     FIELD = r"[a-zA-Z0-9]+?"  # without separator characters
     EXTENSION = r"[.a-zA-Z0-9]+?"  # include dots for sub extensions as 'tar.gz'
@@ -33,7 +32,7 @@ class FieldConf:
                         For example use '[0-9]{4}' and avoid using '*' or '+' when using is_optional=True.
     """
 
-    pattern: str = SafePatterns.FILENAME
+    pattern: str = SafePatterns.NAME
     date_format: str | None = None
     datetime_format: str | None = None
     is_optional: bool | None = False
