@@ -29,11 +29,14 @@ class PathModel:
     def __init__(
         self,
         template: str,
-        parent_template: str | None = None,
         fields: dict[str, FieldConf] | None = None,
         default_field: FieldConf | None = None,
+        parent_template: str | None = None,
     ):
         self.template = template
+        self._fields = fields
+        self._parent_template = parent_template
+        self._default_field = default_field
 
         if parent_template is None:
             parent_template = os.path.dirname(self.template)
@@ -57,7 +60,18 @@ class PathModel:
         check_expected_fields(template_field_names, new_field_names)
 
     def __repr__(self):
-        return f"<Template: '{self.template}'>\n<Fields: {self.fields}>"
+        ident = "  "
+        formatted_fields = "\n".join([f"{ident * 2}'{k}': {v}," for k, v in self.fields.items()])
+        formatted_args = [f"{ident}template='{self.template}',"]
+        if self._fields is not None:
+            formatted_args.append(f"{ident}fields={{\n{formatted_fields}\n  }},")
+        if self._default_field is not None:
+            formatted_args.append(f"{ident}default_field={self.default_field},")
+        if self._parent_template is not None:
+            formatted_args.append(f"{ident}parent_template='{self.parent_template}',")
+        formatted_args_str = "\n".join(formatted_args)
+        repr = f"PathModel(\n{formatted_args_str}\n)"
+        return repr
 
     def replace(self, **kwargs) -> Self:
         """
@@ -66,16 +80,16 @@ class PathModel:
         :param kwargs: Attributes to be replaced, same arguments as used for PathModel instantiation
         :return: A PathModel instance
         """
-        default_parent_template = None
+        default_parent_template = None  # default value when a new template is given, if not it reuse a previous one
         if "template" not in kwargs:
             kwargs["template"] = self.template
-            default_parent_template = self.parent_template
+            default_parent_template = self._parent_template
         if "parent_template" not in kwargs:
-            kwargs["parent_template"] = default_parent_template
+            kwargs["parent_template"] = default_parent_template  # reset to None when a new template is set
         if "fields" not in kwargs:
-            kwargs["fields"] = self.fields
+            kwargs["fields"] = self._fields
         if "default_field" not in kwargs:
-            kwargs["default_field"] = self.default_field
+            kwargs["default_field"] = self._default_field
 
         return self.__class__(**kwargs)
 

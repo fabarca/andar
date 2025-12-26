@@ -35,7 +35,7 @@ class FieldConf:
     pattern: str = SafePatterns.NAME
     date_format: str | None = None
     datetime_format: str | None = None
-    is_optional: bool | None = False
+    is_optional: bool | None = None
     str_to_var: Callable | None = None
     var_to_str: Callable | None = None
 
@@ -46,6 +46,18 @@ class FieldConf:
         active_converters_num = sum([has_date_converter, has_datetime_converter, has_custom_converter])
         if active_converters_num > 1:
             raise ValueError(f"Maximum one field converter is allowed, but {active_converters_num} were found")
+
+    def __repr__(self):
+        formatted_fields = []
+        for k, v in vars(self).items():
+            if v is None:
+                continue
+            v_str = f"'{v}'" if isinstance(v, str) else v.__qualname__
+            field_str = f"{k}={v_str}"
+            formatted_fields.append(field_str)
+        formatted_fields_str = ", ".join(formatted_fields)
+        repr = f"FieldConf({formatted_fields_str})"
+        return repr
 
     def replace(self, **kwargs) -> Self:
         """
