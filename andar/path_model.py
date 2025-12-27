@@ -62,8 +62,9 @@ class PathModel:
         new_field_names = list(new_fields.keys())
         check_expected_fields(template_field_names, new_field_names)
 
-        if description is not None:
-            self.description = description
+        if description is None:
+            description = ""
+        self.description = description
 
     def __repr__(self):
         ident = "  "
