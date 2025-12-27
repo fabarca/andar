@@ -1,6 +1,6 @@
 [project]
 name = "andar"
-version = "0.1.1"
+version = "0.1.2"
 description = "Andar is a python package that provides an abstraction layer for managing path structures, helping to create paths and parse them in a programatic way via templated file paths."
 readme = "README.md"
 requires-python = ">=3.11"
