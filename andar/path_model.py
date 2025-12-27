@@ -24,6 +24,7 @@ class PathModel:
     fields: dict[str, FieldConf]
     default_field: FieldConf
     parent_template: str
+    description: str
     _dir_sep: str = "/"
 
     def __init__(
@@ -32,11 +33,13 @@ class PathModel:
         fields: dict[str, FieldConf] | None = None,
         default_field: FieldConf | None = None,
         parent_template: str | None = None,
+        description: str | None = None,
     ):
         self.template = template
         self._fields = fields
         self._parent_template = parent_template
         self._default_field = default_field
+        self._description = description
 
         if parent_template is None:
             parent_template = os.path.dirname(self.template)
@@ -59,6 +62,9 @@ class PathModel:
         new_field_names = list(new_fields.keys())
         check_expected_fields(template_field_names, new_field_names)
 
+        if description is not None:
+            self.description = description
+
     def __repr__(self):
         ident = "  "
         formatted_fields = "\n".join([f"{ident * 2}'{k}': {v}," for k, v in self.fields.items()])
@@ -69,11 +75,13 @@ class PathModel:
             formatted_args.append(f"{ident}default_field={self.default_field},")
         if self._parent_template is not None:
             formatted_args.append(f"{ident}parent_template='{self.parent_template}',")
+        if self._description is not None:
+            formatted_args.append(f"{ident}description='{self.description}',")
         formatted_args_str = "\n".join(formatted_args)
         repr = f"PathModel(\n{formatted_args_str}\n)"
         return repr
 
-    def replace(self, **kwargs) -> Self:
+    def replace(self, copy_description: bool = False, **kwargs) -> Self:
         """
         Creates a copy of the current object replacing attributes with the given keyword arguments
 
@@ -90,6 +98,11 @@ class PathModel:
             kwargs["fields"] = self._fields
         if "default_field" not in kwargs:
             kwargs["default_field"] = self._default_field
+        default_description = None
+        if copy_description:
+            default_description = self._description
+        if "description" not in kwargs:
+            kwargs["description"] = default_description
 
         return self.__class__(**kwargs)
 
