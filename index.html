@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-andar-docs" class="md-skip">
+        <a href="#andar-package" class="md-skip">
           Skip to content
         </a>
       
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Welcome to Andar Docs
+              Andar Package
             
           </span>
         </div>
@@ -238,7 +238,7 @@
   <span class="md-ellipsis">
     
   
-    Welcome to Andar Docs
+    Andar Package
   
 
     
@@ -256,7 +256,7 @@
   <span class="md-ellipsis">
     
   
-    Welcome to Andar Docs
+    Andar Package
   
 
     
@@ -297,6 +297,56 @@
     <span class="md-ellipsis">
       
         Quick start:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-create-a-path-generator-parser-for-a-date-tree-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to create a path generator / parser for a date tree structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-define-path-conventions-for-a-datalake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to define path conventions for a datalake
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
       
     </span>
   </a>
@@ -709,6 +759,56 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-create-a-path-generator-parser-for-a-date-tree-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to create a path generator / parser for a date tree structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-define-path-conventions-for-a-datalake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to define path conventions for a datalake
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -729,25 +829,25 @@
   
 
 
-<h1 id="welcome-to-andar-docs">Welcome to Andar Docs</h1>
+<h1 id="andar-package">Andar Package</h1>
 <blockquote>
 <p><em>Caminante, no hay camino, se hace camino al </em><em>andar</em><em>.</em></p>
 <p>Antonio Machado</p>
 </blockquote>
-<p>Andar is a python package that provides an abstraction layer for managing path structures, helping to create paths and parse them in a programatic way via templated file paths.</p>
+<p>Andar is a python package that provides an abstraction layer for managing path structures, helping to create and parse paths in a programmatic way via templated file paths.</p>
 <h2 id="install-package">Install Package</h2>
 <p>With pip:
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip install andar
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>andar
 </span></code></pre></div></p>
 <h2 id="quick-start">Quick start:</h2>
-<p>Simple PathModel definition using default field configurations:
+<p>Simple PathModel definition using default field configurations:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">PathModel</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">simple_path_model</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;/</span><span class="si">{base_folder}</span><span class="s2">/</span><span class="si">{subfolder}</span><span class="s2">/</span><span class="si">{base_name}</span><span class="s2">__</span><span class="si">{suffix}</span><span class="s2">.</span><span class="si">{extension}</span><span class="s2">&quot;</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">)</span>
 </span></code></pre></div>
-Generate a path:
+<p>Generate a path:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">result_path</span> <span class="o">=</span> <span class="n">simple_path_model</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="n">base_folder</span><span class="o">=</span><span class="s2">&quot;parent_folder&quot;</span><span class="p">,</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="n">subfolder</span><span class="o">=</span><span class="s2">&quot;other_folder&quot;</span><span class="p">,</span>
@@ -759,7 +859,7 @@ Generate a path:
 </span></code></pre></div>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="s2">&quot;/parent_folder/other_folder/mydata__2000-01-01.csv&quot;</span>
 </span></code></pre></div>
-Parse a path:
+<p>Parse a path:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;/data/reports/summary__2025-12-31.csv&quot;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">parsed_fields</span> <span class="o">=</span> <span class="n">simple_path_model</span><span class="o">.</span><span class="n">parse_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">parsed_fields</span><span class="p">)</span>
@@ -771,7 +871,95 @@ Parse a path:
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="s1">&#39;suffix&#39;</span><span class="p">:</span> <span class="s1">&#39;2025-12-31&#39;</span><span class="p">,</span> 
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="s1">&#39;extension&#39;</span><span class="p">:</span> <span class="s1">&#39;csv&#39;</span><span class="p">,</span>
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 id="examples">Examples</h2>
+<h3 id="how-to-create-a-path-generator-parser-for-a-date-tree-structure">How to create a path generator / parser for a date tree structure</h3>
+<p>Define a PathModel following a date tree folder structure with datetime a suffix using the next template and fields:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldConf</span><span class="p">,</span> <span class="n">PathModel</span><span class="p">,</span> <span class="n">SafePatterns</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">date_archived_pm</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;/</span><span class="si">{base_path}</span><span class="s2">/</span><span class="si">{subfolder}</span><span class="s2">/</span><span class="si">{date_path}</span><span class="s2">/</span><span class="si">{date_prefix}</span><span class="s2">_</span><span class="si">{name}</span><span class="s2">_</span><span class="si">{datetime_suffix}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="s2">&quot;base_path&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">DIRPATH</span><span class="p">),</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="s2">&quot;subfolder&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="s2">&quot;date_path&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{4}</span><span class="s2">/\d</span><span class="si">{2}</span><span class="s2">/\d</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;%Y/%m/</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="s2">&quot;date_prefix&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{4}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">-\d</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">date_format</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">FIELD</span><span class="p">),</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="s2">&quot;datetime_suffix&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{8}</span><span class="s2">_\d</span><span class="si">{6}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">),</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="p">},</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Then, for generating the paths just iterate over dates:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dt</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;company/reports&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">subfolder</span> <span class="o">=</span> <span class="s2">&quot;finance&quot;</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">report_name</span> <span class="o">=</span> <span class="s2">&quot;revenue&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;xls&quot;</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">start_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">report_date_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_date</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">for</span> <span class="n">report_date</span> <span class="ow">in</span> <span class="n">report_date_list</span><span class="p">:</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="n">creation_datetime</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="n">report_path</span> <span class="o">=</span> <span class="n">date_archived_pm</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="n">base_path</span><span class="o">=</span><span class="n">base_path</span><span class="p">,</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>        <span class="n">subfolder</span><span class="o">=</span><span class="n">subfolder</span><span class="p">,</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>        <span class="n">date_path</span><span class="o">=</span><span class="n">report_date</span><span class="p">,</span>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>        <span class="n">date_prefix</span><span class="o">=</span><span class="n">report_date</span><span class="p">,</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>        <span class="n">name</span><span class="o">=</span><span class="n">report_name</span><span class="p">,</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>        <span class="n">datetime_suffix</span><span class="o">=</span><span class="n">creation_datetime</span><span class="p">,</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>        <span class="n">ext</span><span class="o">=</span><span class="n">extension</span><span class="p">,</span>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="p">)</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">report_path</span><span class="p">)</span>
+</span></code></pre></div>
+<p>For parsing already existing paths use a library that allows to recursive search (e.g. pathlib, glob, os, etc) 
+and output a fullpath for each file:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;/company/reports&quot;</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">search_folder</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">path_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">search_folder</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">path_list</span><span class="p">:</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="n">parsed_fields</span> <span class="o">=</span> <span class="n">date_archived_pm</span><span class="o">.</span><span class="n">parse_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">parsed_fields</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="how-to-define-path-conventions-for-a-datalake">How to define path conventions for a datalake</h3>
+<p>For example Data Mesh propose conventions for separating data into domains, layers and products. 
+This could be implemented with the following PathModel template and fields:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldConf</span><span class="p">,</span> <span class="n">PathModel</span><span class="p">,</span> <span class="n">SafePatterns</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">data_mesh_pm</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;/</span><span class="si">{domain}</span><span class="s2">/</span><span class="si">{layer}</span><span class="s2">/</span><span class="si">{product}</span><span class="s2">/</span><span class="si">{aggregation}</span><span class="s2">/</span><span class="si">{date}</span><span class="s2">_</span><span class="si">{product}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># sales, marketing, HR, finance, etc</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># raw, intermediate, mart, etc</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="s2">&quot;product&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># orders, revenues, taxes, campaigns, etc</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="s2">&quot;aggregation&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># daily, weekly, monthly, etc</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{8}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>  <span class="c1"># product date</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span>  <span class="c1"># csv, xls, parquet, etc</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="p">},</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>For improving traceability, it's a good practice to also include run datetime (i.e. generation date) 
+as a simple version system:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldConf</span><span class="p">,</span> <span class="n">PathModel</span><span class="p">,</span> <span class="n">SafePatterns</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">data_mesh_pm</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;/</span><span class="si">{domain}</span><span class="s2">/</span><span class="si">{layer}</span><span class="s2">/</span><span class="si">{product}</span><span class="s2">/</span><span class="si">{aggregation}</span><span class="s2">/</span><span class="si">{product_date}</span><span class="s2">_</span><span class="si">{product}</span><span class="s2">_</span><span class="si">{run_datetime}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="s2">&quot;domain&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># sales, marketing, HR, finance, etc</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>        <span class="s2">&quot;layer&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># raw, intermediate, mart, etc</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>        <span class="s2">&quot;product&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># orders, revenues, taxes, campaigns, etc</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>        <span class="s2">&quot;aggregation&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>  <span class="c1"># daily, weekly, monthly, etc</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>        <span class="s2">&quot;product_date&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{8}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>  <span class="c1"># product target date</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="s2">&quot;run_datetime&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{8}</span><span class="s2">_\d</span><span class="si">{6}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">),</span>  <span class="c1"># generation datetime</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span>  <span class="c1"># csv, xls, parquet, etc</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    <span class="p">},</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="p">)</span>
 </span></code></pre></div></p>
+<h2 id="documentation">Documentation</h2>
+<p>See the <a href="https://fabarca.github.io/andar">official documentation</a> to learn more.</p>
 
 
 
