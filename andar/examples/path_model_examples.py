@@ -9,15 +9,15 @@ date_archived_pm = PathModel(
         "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
         #  safe pattern for a folder
         "subfolder": FieldConf(pattern=SafePatterns.NAME),
-        # date converter
+        # date converter for mapping a date to a tree path
         "date_path": FieldConf(pattern=r"\d{4}/\d{2}/\d{2}", date_format="%Y/%m/%d"),
-        # date converter
+        # date converter for mapping a date to a file prefix
         "date_prefix": FieldConf(pattern=r"\d{4}-\d{2}-\d{2}", date_format="%Y-%m-%d"),
         # safe pattern for a field (without separator characters)
         "name": FieldConf(pattern=SafePatterns.FIELD),
-        # datetime converter
+        # datetime converter for mapping a datetime to a file suffix
         "datetime_suffix": FieldConf(pattern=r"\d{8}_\d{6}", datetime_format="%Y%m%d_%H%M%S"),
-        #  safe pattern for an extension
+        # safe pattern for a file extension
         "ext": FieldConf(pattern=SafePatterns.EXTENSION),
     },
 )
