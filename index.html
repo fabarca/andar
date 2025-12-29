@@ -337,6 +337,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#how-to-reorganize-files-and-folders-in-a-datalake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to reorganize files and folders in a datalake
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -793,6 +804,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#how-to-reorganize-files-and-folders-in-a-datalake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to reorganize files and folders in a datalake
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -878,7 +900,7 @@
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldConf</span><span class="p">,</span> <span class="n">PathModel</span><span class="p">,</span> <span class="n">SafePatterns</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">date_archived_pm</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;/</span><span class="si">{base_path}</span><span class="s2">/</span><span class="si">{subfolder}</span><span class="s2">/</span><span class="si">{date_path}</span><span class="s2">/</span><span class="si">{date_prefix}</span><span class="s2">_</span><span class="si">{name}</span><span class="s2">_</span><span class="si">{datetime_suffix}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{base_path}</span><span class="s2">/</span><span class="si">{subfolder}</span><span class="s2">/</span><span class="si">{date_path}</span><span class="s2">/</span><span class="si">{date_prefix}</span><span class="s2">_</span><span class="si">{name}</span><span class="s2">_</span><span class="si">{datetime_suffix}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
 </span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="s2">&quot;base_path&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">DIRPATH</span><span class="p">),</span>
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="s2">&quot;subfolder&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>
@@ -893,7 +915,7 @@
 <p>Then, for generating the paths just iterate over dates:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dt</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;company/reports&quot;</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">base_path</span> <span class="o">=</span> <span class="s2">&quot;/company/reports&quot;</span>
 </span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">subfolder</span> <span class="o">=</span> <span class="s2">&quot;finance&quot;</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">report_name</span> <span class="o">=</span> <span class="s2">&quot;revenue&quot;</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">extension</span> <span class="o">=</span> <span class="s2">&quot;xls&quot;</span>
@@ -958,6 +980,63 @@ as a simple version system:
 </span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>    <span class="p">},</span>
 </span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="p">)</span>
 </span></code></pre></div></p>
+<h3 id="how-to-reorganize-files-and-folders-in-a-datalake">How to reorganize files and folders in a datalake</h3>
+<p>In this example we will reorganize a flatten file structure into a nested one.
+First define the two PathModels, the old one and the new one:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">andar</span><span class="w"> </span><span class="kn">import</span> <span class="n">FieldConf</span><span class="p">,</span> <span class="n">PathModel</span><span class="p">,</span> <span class="n">SafePatterns</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">old_flat_pm</span> <span class="o">=</span> <span class="n">PathModel</span><span class="p">(</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{base_path}</span><span class="s2">/</span><span class="si">{category}</span><span class="s2">_</span><span class="si">{name}</span><span class="s2">_</span><span class="si">{date}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span><span class="p">,</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="n">fields</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>        <span class="s2">&quot;base_path&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">DIRPATH</span><span class="p">),</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>        <span class="s2">&quot;category&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">NAME</span><span class="p">),</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">FIELD</span><span class="p">),</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\d</span><span class="si">{8}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">datetime_format</span><span class="o">=</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">),</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="s2">&quot;ext&quot;</span><span class="p">:</span> <span class="n">FieldConf</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="n">SafePatterns</span><span class="o">.</span><span class="n">EXTENSION</span><span class="p">),</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="p">},</span>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="p">)</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="c1"># we can just update the template if the fields are de same</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="n">new_nested_pm</span> <span class="o">=</span> <span class="n">old_flat_pm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="n">template</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{base_path}</span><span class="s2">/</span><span class="si">{category}</span><span class="s2">/</span><span class="si">{date}</span><span class="s2">/</span><span class="si">{name}</span><span class="s2">.</span><span class="si">{ext}</span><span class="s2">&quot;</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="p">)</span>
+</span></code></pre></div>
+<p>Example of file creating in a temporary directory using a flatten structure with the old PathModel:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dt</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">base_path</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">start_date</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">date_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">start_date</span> <span class="o">+</span> <span class="n">dt</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="k">for</span> <span class="n">date</span> <span class="ow">in</span> <span class="n">date_list</span><span class="p">:</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="n">creation_datetime</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    <span class="n">file_path</span> <span class="o">=</span> <span class="n">old_flat_pm</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="n">base_path</span><span class="o">=</span><span class="n">base_path</span><span class="p">,</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>        <span class="n">category</span><span class="o">=</span><span class="s2">&quot;sales&quot;</span><span class="p">,</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;orders&quot;</span><span class="p">,</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="n">date</span><span class="o">=</span><span class="n">date</span><span class="p">,</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>        <span class="n">ext</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">,</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>    <span class="p">)</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>  <span class="c1"># create an empty file</span>
+</span></code></pre></div>
+<p>Example of nesting file paths using the parser of the old PathModel and the get_path of the new PathModel:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># First list existing files in target base path</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">search_folder</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">path_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">search_folder</span><span class="o">.</span><span class="n">rglob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">is_file</span><span class="p">()]</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">path_list</span><span class="p">:</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="n">parsed_fields</span> <span class="o">=</span> <span class="n">old_flat_pm</span><span class="o">.</span><span class="n">parse_path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="c1"># As the fields are the same we can reuse them directly</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">new_file_path</span> <span class="o">=</span> <span class="n">new_nested_pm</span><span class="o">.</span><span class="n">get_path</span><span class="p">(</span><span class="o">**</span><span class="n">parsed_fields</span><span class="p">)</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="c1"># create new parent directories</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">new_file_path</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>    <span class="c1"># move old file to new location using the new name</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">new_file_path</span><span class="p">)</span>
+</span></code></pre></div>
+<p>The same strategy could be adapted to flatten a nested path structure using PathModels.</p>
 <h2 id="documentation">Documentation</h2>
 <p>See the <a href="https://fabarca.github.io/andar">official documentation</a> to learn more.</p>
 
