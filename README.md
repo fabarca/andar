@@ -72,7 +72,7 @@ Define a PathModel following a date tree folder structure with datetime a suffix
 from andar import FieldConf, PathModel, SafePatterns
 
 date_archived_pm = PathModel(
-    template="/{base_path}/{subfolder}/{date_path}/{date_prefix}_{name}_{datetime_suffix}.{ext}",
+    template="{base_path}/{subfolder}/{date_path}/{date_prefix}_{name}_{datetime_suffix}.{ext}",
     fields={
         "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
         "subfolder": FieldConf(pattern=SafePatterns.NAME),
@@ -90,7 +90,7 @@ Then, for generating the paths just iterate over dates:
 ```python
 import datetime as dt
 
-base_path = "company/reports"
+base_path = "/company/reports"
 subfolder = "finance"
 report_name = "revenue"
 extension = "xls"
@@ -165,6 +165,75 @@ data_mesh_pm = PathModel(
     },
 )
 ```
+
+
+### How to reorganize files and folders in a datalake
+
+In this example we will reorganize a flatten file structure into a nested one.
+First define the two PathModels, the old one and the new one:
+
+```python
+from andar import FieldConf, PathModel, SafePatterns
+
+old_flat_pm = PathModel(
+    template="{base_path}/{category}_{name}_{date}.{ext}",
+    fields={
+        "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
+        "category": FieldConf(pattern=SafePatterns.NAME),
+        "name": FieldConf(pattern=SafePatterns.FIELD),
+        "date": FieldConf(pattern=r"\d{8}", datetime_format="%Y%m%d"),
+        "ext": FieldConf(pattern=SafePatterns.EXTENSION),
+    },
+)
+
+# we can just update the template if the fields are de same
+new_nested_pm = old_flat_pm.update(
+    template="{base_path}/{category}/{date}/{name}.{ext}"
+)
+```
+
+Example of file creating in a temporary directory using a flatten structure with the old PathModel:
+
+```python
+import pathlib
+import tempfile
+import datetime as dt
+
+base_path = tempfile.mkdtemp()
+start_date = dt.datetime(2025, 12, 1)
+date_list = [start_date + dt.timedelta(days=d) for d in range(10)]
+
+for date in date_list:
+    creation_datetime = dt.datetime.now()
+    file_path = old_flat_pm.get_path(
+        base_path=base_path,
+        category="sales",
+        name="orders",
+        date=date,
+        ext="csv",
+    )
+    print(file_path)
+    pathlib.Path(file_path).touch()  # create an empty file
+```
+
+Example of nesting file paths using the parser of the old PathModel and the get_path of the new PathModel:
+
+```python
+# First list existing files in target base path
+search_folder = pathlib.Path(base_path)
+path_list = [str(i) for i in search_folder.rglob("*") if i.is_file()]
+
+for file_path in path_list:
+    parsed_fields = old_flat_pm.parse_path(file_path)
+    # As the fields are the same we can reuse them directly
+    new_file_path = new_nested_pm.get_path(**parsed_fields)
+    # create new parent directories
+    pathlib.Path(new_file_path).parent.mkdir(parents=True, exist_ok=True)
+    # move old file to new location using the new name
+    pathlib.Path(file_path).replace(new_file_path)
+```
+
+The same strategy could be adapted to flatten a nested path structure using PathModels.
 
 ## Documentation
 See the [official documentation](https://fabarca.github.io/andar) to learn more.
