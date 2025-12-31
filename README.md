@@ -32,7 +32,7 @@ Andar helps to separate I/O layer from path generation layer resulting in a code
 Andar provides field name checking via regular expressions and functions to assert bijection between path generation and
 path parsing.
 
-### Flexibility
+### Flexibility
 
 Andar allows for a quick start just by defining a path template thanks to its predefined fields and patterns. It also 
 include more advance capabilities for customizing field parsing and generation via regular expression and string converters while 
