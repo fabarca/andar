@@ -1,10 +1,6 @@
 # Andar Package
 
-> *Caminante, no hay camino, se hace camino al **andar**.*
-> 
-> Antonio Machado
-
-Andar is a python package that provides an abstraction layer for managing path structures, helping to create and parse paths in a programmatic way via templated file paths.
+Andar is a Python library that provides an abstraction layer for managing path structures, helping to create and parse paths programmatically via templated file paths.
 
 
 ## Install Package
@@ -14,8 +10,60 @@ With pip:
 pip install andar
 ```
 
+## Key features
 
-## Quick start:
+### Clean code
+
+Andar promotes clean code by using a composition approach to avoid inheritance hell.
+Furthermore, it allows to define a path conventions in a single place using a clear and intuitive syntax.
+The use of templated path strings with field definitions helps to avoid the error-prone split/index syntax
+
+### Reusability
+
+Andar allows using a single path convention via a PathModel for both generating and parsing paths.
+PathModels can be reused to create new path conventions with minimal effort without modifying the parent PathModel.
+
+### Separation of Concerns
+
+Andar helps to separate I/O layer from path generation layer resulting in a code easier to maintain.
+
+### Predictability
+
+Andar provides field name checking via regular expressions and functions to assert bijection between path generation and
+path parsing.
+
+### Flexibility
+
+Andar allows for a quick start just by defining a path template thanks to its predefined fields and patterns. It also 
+include more advance capabilities for customizing field parsing and generation via regular expression and string converters while 
+maintaining a simple syntax.
+
+### Lightweight
+
+Andar is written using standard Python library, so it is very lightweight without any external dependencies.
+
+## Concepts
+
+### PathModel
+
+PathModel is the main class that allows to easy define path conventions and manage path structures. It is based on two
+main components: templates and fields.
+Templates are strings that define the names of the fields in the path structure using a simple syntax 
+(inspired by f-string) , for example: `"/{folder}/{prefix}_{name}_{suffix}.{ext}"`
+Fields are the basic components that allow to map an object to a string in order to build or parse a path. Fields 
+are defined via a class named FieldConf (see next section).
+
+A PathModel can be defined only with the template string because there is already a default value for fields.
+Once a PathModel is defined it can be used to generate a new path or to parse an existing path in order to get 
+its fields. See [Quick Start](#quick-start) for a simple example. For more details check the [Docs](https://fabarca.github.io/andar/).
+
+
+### FieldConf
+
+FieldConf is the class that defines how to parse and build a given field. It can be customized by specifying its regex pattern and how to convert the input object to a string and vice versa. It comes with a handy way for automatically manage dates and datetimes. See [Examples](#examples) section for some applied use cases. For more details check the [Docs](https://fabarca.github.io/andar/).
+
+
+## Quick Start
 
 Simple PathModel definition using default field configurations:
 
@@ -237,3 +285,11 @@ The same strategy could be adapted to flatten a nested path structure using Path
 
 ## Documentation
 See the [official documentation](https://fabarca.github.io/andar) to learn more.
+
+
+## Package name origin
+
+The package name originates from a verse by the Spanish poet Antonio Machado:
+> "Caminante, no hay camino, se hace camino al **andar**."
+> 
+> Antonio Machado
