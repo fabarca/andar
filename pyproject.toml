@@ -1,6 +1,6 @@
 [project]
 name = "andar"
-version = "0.1.5"
+version = "0.1.6"
 description = "Provides an abstraction layer for creating and parsing paths in a programmatic way via templates."
 readme = "README.md"
 requires-python = ">=3.11"
