@@ -55,12 +55,12 @@ are defined via a class named FieldConf (see next section).
 
 A PathModel can be defined only with the template string because there is already a default value for fields.
 Once a PathModel is defined it can be used to generate a new path or to parse an existing path in order to get 
-its fields. See [Quick Start](#quick-start) for a simple example. For more details check the [Docs](https://fabarca.github.io/andar/).
+its fields. See [Quick Start](#quick-start) for a simple example. For more details check the [Docs](https://fabarca.github.io/andar/reference/andar/path_model/).
 
 
 ### FieldConf
 
-FieldConf is the class that defines how to parse and build a given field. It can be customized by specifying its regex pattern and how to convert the input object to a string and vice versa. It comes with a handy way for automatically manage dates and datetimes. See [Examples](#examples) section for some applied use cases. For more details check the [Docs](https://fabarca.github.io/andar/).
+FieldConf is the class that defines how to parse and build a given field. It can be customized by specifying its regex pattern and how to convert the input object to a string and vice versa. It comes with a handy way for automatically manage dates and datetimes. See [Examples](#examples) section for some applied use cases. For more details check the [Docs](https://fabarca.github.io/andar/reference/andar/field_conf/).
 
 
 ## Quick Start

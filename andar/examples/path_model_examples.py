@@ -1,3 +1,11 @@
+"""
+Docstring for andar.examples.path_model_examples
+
+Attributes:
+    date_archived_pm (PathModel): A date archived path model.
+    data_mesh_pm (PathModel): A data mesh path model.
+"""
+
 from andar import FieldConf, PathModel, SafePatterns
 
 # A date archived path model

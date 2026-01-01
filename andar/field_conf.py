@@ -1,11 +1,17 @@
 from collections.abc import Callable
 from dataclasses import dataclass, replace
-from typing import Self
+from typing import Any, Self
 
 
 class SafePatterns:
     """
     Non-greedy patterns
+
+    Attributes:
+        NAME: Alphanumeric characters plus name separators: `-_.`
+        DIRPATH: Alphanumeric characters plus name separators: `-_.` plus directory separator: `/`
+        FIELD: Alphanumeric characters
+        EXTENSION: Alphanumeric characters plus dots for sub extensions as 'tar.gz'
     """
 
     NAME = r"[-_.a-zA-Z0-9]+?"  # include name separators: -_.
@@ -19,14 +25,15 @@ class FieldConf:
     """
     FieldConf allows to configure how a path field is validated, parsed and processed
 
-    :param pattern: is used for validate input of get_path and get_parent_path, and also for getting fields using
+    Params:
+        pattern: is used for validate input of get_path and get_parent_path, and also for getting fields using
                     parse_path. By default, it used SafePatterns.FILENAME.
-    :param date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a
+        date_format: date_format and datetime_format are used in get_path and get_parent_path for accepting either a
                         string or a datetime object that can be formated to an input string for a the given template.
                         They are also used for validating the parsed field when using parse_path and for defining how
                         to cast the string (to date or to datetime, depending on the argument that was used).
-    :param datetime_format: See description of date_format parameter.
-    :param is_optional: allows to omit a field during the path generation (get_path and get_parent_path)
+        datetime_format: See description of date_format parameter.
+        is_optional: allows to omit a field during the path generation (get_path and get_parent_path)
                         or to skip field during the path parsing. IMPORTANT! in order to work properly, pattern must
                         be constrained, otherwise the PathModel class may have an unexpected behaviour.
                         For example use '[0-9]{4}' and avoid using '*' or '+' when using is_optional=True.
@@ -59,12 +66,15 @@ class FieldConf:
         repr = f"FieldConf({formatted_fields_str})"
         return repr
 
-    def replace(self, **kwargs) -> Self:
+    def replace(self, **kwargs: Any) -> Self:
         """
         Creates a copy of the current object replacing attributes with the given keyword arguments
 
-        :param kwargs: Attributes to be replaced
-        :return: An FieldConf object with the attributes replaced
+        Params:
+            **kwargs: Attributes (parameters) to be replaced
+
+        Returns:
+            A copy of the object with the attributes replaced
         """
         field_conf = replace(self, **kwargs)
         return field_conf

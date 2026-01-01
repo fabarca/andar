@@ -15,8 +15,11 @@ def get_template_fields_names(path_template: str) -> list[str]:
     """
     Get fields names from path template string
 
-    :param path_template: String. Path template that follows string.Formatter() syntax.
-    :return: List. Template fields names.
+    Params:
+        path_template: Path template that follows string.Formatter() syntax.
+
+    Returns:
+        Template fields names.
     """
     parsed_field_tuples = list(string.Formatter().parse(path_template))
     template_fields_names = [name for (text, name, spec, conv) in parsed_field_tuples if name is not None]
@@ -27,9 +30,12 @@ def assign_groupname_pattern_dict(pattern_dict: dict[str:str]) -> dict[str:str]:
     """
     Assign a group name to each regex pattern present in the given dictionary
 
-    :param pattern_dict: A dictionary of regex patterns, where each key will be used as group name. It does not
-                            check if the pattern already have a group name assign.
-    :return: A dictionary where the patterns have been assigned a group name.
+    Params:
+        pattern_dict: A dictionary of regex patterns, where each key will be used as group name. It does not
+                  check if the pattern already have a group name assign.
+
+    Returns:
+        A dictionary where the patterns have been assigned a group name.
     """
     named_pattern_dict = {}
     for field, pattern in pattern_dict.items():
@@ -47,19 +53,24 @@ def parse_fields(
     Parse a string using a template and a patterns dictionary
 
     Example:
-    filename_template = "{prefix}_{name}.{extension}"
-    pattern_dict = {"prefix": "[0-9]{4}", "name": "[a-zA-Z0-9]+", "extension": "json"}
-    filename = "0001_example.json"
-    parsed_filename_dict = parse_fields(filename, filename_template, pattern_dict)
-    invalid_filename = "invalid_example.json"
-    parse_fields(invalid_filename, filename_template, pattern_dict, raise_error=True)
+        ```python
+        filename_template = "{prefix}_{name}.{extension}"
+        pattern_dict = {"prefix": "[0-9]{4}", "name": "[a-zA-Z0-9]+", "extension": "json"}
+        filename = "0001_example.json"
+        parsed_filename_dict = parse_fields(filename, filename_template, pattern_dict)
+        invalid_filename = "invalid_example.json"
+        parse_fields(invalid_filename, filename_template, pattern_dict, raise_error=True)
+        ```
 
-    :param _string: String to be parsed.
-    :param template: A template that follows string.Formatter() syntax.
-    :param pattern_dict: A dictionary where each key represent a field of the template and each value is the
+    Params:
+        _string: String to be parsed.
+        template: A template that follows string.Formatter() syntax.
+        pattern_dict: A dictionary where each key represent a field of the template and each value is the
                             corresponding regex pattern
-    :param raise_error: Raise an exception if the path is not valid. If False, it returns None.
-    :return: A dictionary of parsed fields.
+        raise_error: Raise an exception if the path is not valid. If False, it returns None.
+
+    Returns:
+        A dictionary of parsed fields.
     """
     template_field_names = get_template_fields_names(template)
     pattern_field_names = list(pattern_dict.keys())
@@ -126,9 +137,13 @@ def parse_fields(
 def prepare_fields_values(fields_values_dict: dict[str:Any], fields_conf: dict[str, FieldConf]) -> dict[str:str]:
     """
     Prepare fields values for this path
-    :param fields_values_dict: Dictionary of fields values
-    :param fields_conf: Dictionary of fields configuration (i.e.class FieldConf)
-    :return: A dictionary of fields where the values were converted to strings.
+
+    Params:
+        fields_values_dict: Dictionary of fields values
+        fields_conf: Dictionary of fields configuration (i.e.class FieldConf)
+
+    Returns:
+        A dictionary of fields where the values were converted to strings.
     """
     new_fields_values_dict = {}
     for field_name, field_value in fields_values_dict.items():
@@ -165,8 +180,11 @@ def process_parsed_fields_values(fields_conf: dict[str, FieldConf], parsed_field
     """
     Process fields values dictionary obtained from parsing a file path
 
-    :param parsed_fields: A dictionary of parsed fields values in string format.
-    :return: A processed dictionary of fields with converted values depending on each FieldConf definition.
+    Params:
+        parsed_fields: A dictionary of parsed fields values in string format.
+
+    Returns:
+        A processed dictionary of fields with converted values depending on each FieldConf definition.
     """
     new_parsed_fields = parsed_fields.copy()
 

@@ -2,8 +2,9 @@ def check_expected_fields(expected_field_names: list[str], new_field_names: list
     """
     Check if fields in the expected_field_names are coherent with new_field_names
 
-    :param expected_field_names: The expected list of field names.
-    :param new_field_names: The new list of field names to be validated.
+    Params:
+        expected_field_names: The expected list of field names.
+        new_field_names: The new list of field names to be validated.
     """
     invalid_fields = [f for f in new_field_names if f not in expected_field_names]
     if invalid_fields:
@@ -22,8 +23,9 @@ def check_parent_path_template(path_template: str, parent_path_template: str) ->
     """
     Check if parent_path_template is coherent with path_template
 
-    :param path_template: String. Path template that follows string.Formatter() syntax.
-    :param parent_path_template: String. Parent path template that follows string.Formatter() syntax.
+    Params:
+        path_template: String. Path template that follows string.Formatter() syntax.
+        parent_path_template: String. Parent path template that follows string.Formatter() syntax.
     """
     if parent_path_template not in path_template:
         raise ValueError(

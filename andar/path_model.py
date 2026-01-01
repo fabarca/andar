@@ -18,6 +18,9 @@ class PathModel:
     It defines a path via a template and its fields. Once instantiated, it allows to build new paths
     and to parse path strings to recover individual fields.
 
+    Attributes:
+        template: A template string
+        fields: A dictionary of FieldConfs
     """
 
     template: str
@@ -82,12 +85,15 @@ class PathModel:
         repr = f"PathModel(\n{formatted_args_str}\n)"
         return repr
 
-    def replace(self, copy_description: bool = False, **kwargs) -> Self:
+    def replace(self, copy_description: bool = False, **kwargs: Any) -> Self:
         """
         Creates a copy of the current object replacing attributes with the given keyword arguments
 
-        :param kwargs: Attributes to be replaced, same arguments as used for PathModel instantiation
-        :return: A PathModel instance
+        Params:
+            **kwargs: Attributes to be replaced, same arguments as used for PathModel instantiation
+
+        Returns:
+            A PathModel instance
         """
         default_parent_template = None  # default value when a new template is given, if not it reuse a previous one
         if "template" not in kwargs:
@@ -107,13 +113,17 @@ class PathModel:
 
         return self.__class__(**kwargs)
 
-    def update(self, **kwargs) -> Self:
+    def update(self, **kwargs: Any) -> Self:
         """
         Creates a copy of the current object updating attributes with the given keyword arguments
-        :param kwargs: Attributes to be updated, same arguments as used for PathModel instantiation.
-                       Fields set to None, will be reset to default, if it is no longer present on the template, it will
-                       be removed.
-        :return: A PathModel instance
+
+        Params:
+            **kwargs: Attributes to be updated, same arguments as used for PathModel instantiation.
+                      Fields set to None, will be reset to default, if it is no longer present on the template, it will
+                      be removed.
+
+        Returns:
+            A PathModel instance
         """
         fields = self.fields.copy()
         if "fields" in kwargs:
@@ -132,10 +142,13 @@ class PathModel:
         """
         Parse a file path
 
-        :param file_path: String to be parsed.
-        :param raise_error: Whether to raise an exception if the file path is not valid. By default, it returns None.
-        :return: Dictionary where each key represent a field of the template and each value is the corresponding parsed
-                 string (or converted object)
+        Params:
+            file_path: String to be parsed.
+            raise_error: Whether to raise an exception if the file path is not valid. By default, it returns None.
+
+        Returns:
+            Dictionary where each key represent a field of the template and each value is the corresponding parsed
+            string (or converted object)
         """
         ds = self._dir_sep
         path_template = self.template
@@ -164,11 +177,14 @@ class PathModel:
         """
         Generate path using input parameters
 
-        :param template: A template that follows string.Formatter() syntax.
-        :param fields_conf: Dictionary of fields configurations, where keys are field names and values are FieldConf
-                            instances.
-        :param fields_values_dict: Input parameters dict that maps template fields to values.
-        :return: String. Path.
+        Params:
+            template: A template that follows string.Formatter() syntax.
+            fields_conf: Dictionary of fields configurations, where keys are field names and values are FieldConf
+                         instances.
+            fields_values_dict: Input parameters dict that maps template fields to values.
+
+        Returns:
+            A path string.
         """
         fields_values_dict = fields_values_dict.copy()
         template_field_names = get_template_fields_names(template)
@@ -186,24 +202,30 @@ class PathModel:
         new_path = os.path.normpath(new_path)
         return new_path
 
-    def get_path(self, **kwargs) -> str:
+    def get_path(self, **kwargs: Any) -> str:
         """
         Generate path using input parameters
 
-        :param kwargs: Input parameters that maps template fields to values.
-        :return: String. Path.
+        Params:
+            **kwargs: Input parameters that maps template fields to values.
+
+        Returns:
+            A path string.
         """
         return self._get_path(template=self.template, fields_conf=self.fields, fields_values_dict=kwargs)
 
-    def get_parent_path(self, **kwargs) -> str:
+    def get_parent_path(self, **kwargs: Any) -> str:
         """
         Generate parent path using input parameters
 
-        :param kwargs: Input parameters that maps template fields to values. They are used in the order of
-                       parent_template, if the last argument(s) are omitted, the parent_template will be dynamically
-                       updated to a shorter version. If an argument in the middle is omitted, and it is not optional,
-                       an error will be raised.
-        :return: String. Parent path.
+        Params:
+            **kwargs: Input parameters that maps template fields to values. They are used in the order of
+                      parent_template, if the last argument(s) are omitted, the parent_template will be dynamically
+                      updated to a shorter version. If an argument in the middle is omitted, and it is not optional,
+                      an error will be raised.
+
+        Returns:
+            Parent path string.
         """
 
         # remove all fields not present in parent template
@@ -259,7 +281,8 @@ class PathModel:
 
         It tries to recover the same initial input after processing once with parse_file_path and get_path
 
-        :param test_path: Path string to be tested
+        Params:
+            test_path: Path string to be tested
         """
         parsed_fields = self.parse_path(test_path, raise_error=True)
         result_test_path = self.get_path(**parsed_fields)
@@ -272,7 +295,8 @@ class PathModel:
         It tries to recover the same initial input after processing once with get_path and parse_file_path
         This method is the preferred way of checking if the PathModel was well-defined.
 
-        :param test_fields: Dictionary of fields to be tested
+        Params:
+            test_fields: Dictionary of fields to be tested
         """
         test_path = self.get_path(**test_fields)
         result_parsed_fields = self.parse_path(test_path, raise_error=True)

@@ -10,7 +10,10 @@ theme:
 plugins:
   - search
   - mkdocstrings:
-      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: google
   - api-autonav:
       modules: ['andar']
 markdown_extensions:
