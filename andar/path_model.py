@@ -1,11 +1,13 @@
 import os.path
+import re
 from typing import Any, Self
 
 from andar.check_utils import check_expected_fields, check_parent_path_template
 from andar.field_conf import FieldConf
 from andar.parser_utils import (
+    compile_path_regex,
+    fusion_deduplicated_fields,
     get_template_fields_names,
-    parse_fields,
     prepare_fields_values,
     process_parsed_fields_values,
 )
@@ -28,11 +30,13 @@ class PathModel:
     default_field: FieldConf
     parent_template: str
     description: str
+    compiled_regex: re.Pattern
     _dir_sep: str = "/"
 
     def __init__(
         self,
         template: str,
+        *,
         fields: dict[str, FieldConf] | None = None,
         default_field: FieldConf | None = None,
         parent_template: str | None = None,
@@ -68,6 +72,12 @@ class PathModel:
         if description is None:
             description = ""
         self.description = description
+
+        self.compiled_regex = compile_path_regex(
+            template=self.template,
+            fields=self.fields,
+            ds=self._dir_sep,
+        )
 
     def __repr__(self):
         ident = "  "
@@ -119,8 +129,8 @@ class PathModel:
 
         Params:
             **kwargs: Attributes to be updated, same arguments as used for PathModel instantiation.
-                      Fields set to None, will be reset to default, if it is no longer present on the template, it will
-                      be removed.
+                      Fields set to `None` will be reset to default_field, if no longer present in the template,
+                      they will be removed instead.
 
         Returns:
             A PathModel instance
@@ -150,21 +160,16 @@ class PathModel:
             Dictionary where each key represent a field of the template and each value is the corresponding parsed
             string (or converted object)
         """
-        ds = self._dir_sep
-        path_template = self.template
-        path_template = path_template.replace(r".", r"\.")
-        pattern_dict = {}
-        for field_name, field_conf in self.fields.items():
-            field_pattern = field_conf.pattern
-            if field_conf.is_optional:
-                field_pattern = f"{field_pattern}|"
-                # Allow optional directory separator for this field: "/" -> "/?", by updating path_template
-                field_name_dir_sep = "{" + field_name + "}" + ds + "{"
-                optional_field_name_dir_sep = "{" + field_name + "}" + ds + "?{"
-                path_template = path_template.replace(field_name_dir_sep, optional_field_name_dir_sep)
-            pattern_dict[field_name] = field_pattern
-        parsed_fields = parse_fields(file_path, path_template, pattern_dict, raise_error=raise_error)
-        processed_fields = process_parsed_fields_values(self.fields, parsed_fields)
+
+        match = self.compiled_regex.match(file_path)
+        if not match:
+            if raise_error:
+                raise ValueError(f"Invalid path '{file_path}', expected pattern: '{self.compiled_regex.pattern}'")
+            return None
+        parsed_fields_dict = match.groupdict()
+        parsed_fields_dict = fusion_deduplicated_fields(parsed_fields_dict)
+
+        processed_fields = process_parsed_fields_values(self.fields, parsed_fields_dict)
         return processed_fields
 
     @classmethod

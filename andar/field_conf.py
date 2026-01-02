@@ -11,7 +11,7 @@ class SafePatterns:
         FIELD: Alphanumeric characters
         NAME: Alphanumeric characters plus name separators: `-_.`
         DIRPATH: Alphanumeric characters plus name separators: `-_.` plus directory separator: `/`
-        EXTENSION: Alphanumeric characters plus dots for sub extensions as 'tar.gz'
+        EXTENSION: Alphanumeric characters plus dots for sub extensions as in `tar.gz`
     """
 
     FIELD = r"[a-zA-Z0-9]+?"  # without separator characters

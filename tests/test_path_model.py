@@ -19,6 +19,12 @@ class PathModelTests(unittest.TestCase):
 
         path_builder.parse_path(expected_path)
 
+        wrong_path = "folder/my_data.csv"
+        with self.assertRaises(ValueError) as cm:
+            path_builder.parse_path(wrong_path, raise_error=True)
+        expected_error_msg = f"Invalid path '{wrong_path}', expected pattern"
+        self.assertIn(expected_error_msg, str(cm.exception))
+
         result_parent_path = path_builder.get_parent_path(
             base_folder="parent_folder",
             intermediate_folder="other_folder",

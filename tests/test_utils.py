@@ -1,7 +1,13 @@
 import unittest
 
 from andar.check_utils import check_expected_fields, check_parent_path_template
-from andar.parser_utils import assign_groupname_pattern_dict, get_template_fields_names, parse_fields
+from andar.field_conf import FieldConf
+from andar.parser_utils import (
+    assign_groupname_pattern_dict,
+    compile_path_regex,
+    fusion_deduplicated_fields,
+    get_template_fields_names,
+)
 
 
 class UtilsTests(unittest.TestCase):
@@ -46,52 +52,63 @@ class UtilsTests(unittest.TestCase):
         result_field_names = get_template_fields_names(template_str)
         self.assertEqual(result_field_names, expected_fields_names)
 
-    def test_parse_filename_fields(self):
-        filename_template = "{id}_{name}_{date}.{extension}"
-        pattern_dict = {
-            "id": "[0-9]{5}",
-            "name": "[a-zA-Z_]+",
-            "date": r"[0-9]{8}",
-            "extension": "txt",
+    def test_fusion_deduplicated_fields(self):
+        parsed_field_dict = {
+            "name": "data",
+            "version__0": "v1",
+            "version__1": "v1",
+            "version__2": "v1",
+            "ext": "csv",
         }
-        filename = "12345_custom_name_20240101.txt"
-        fields_dict = parse_fields(filename, filename_template, pattern_dict, raise_error=True)
-        expected_fields_dict = {
-            "id": "12345",
-            "name": "custom_name",
-            "date": "20240101",
-            "extension": "txt",
+        result_dict = fusion_deduplicated_fields(parsed_field_dict)
+        expected_fusioned_dict = {
+            "name": "data",
+            "version": "v1",
+            "ext": "csv",
         }
-        self.assertEqual(expected_fields_dict, fields_dict)
+        self.assertDictEqual(expected_fusioned_dict, result_dict)
 
-        wrong_filename = "12345_custom_name_2024-01-01.txt"
+        invalid_dict = {
+            "name": "data",
+            "version__0": "v2",
+            "version__1": "v3",
+            "ext": "csv",
+        }
         with self.assertRaises(ValueError) as cm:
-            parse_fields(wrong_filename, filename_template, pattern_dict, raise_error=True)
-        expected_error_msg = f"Invalid string '{wrong_filename}', expected pattern"
+            result_dict = fusion_deduplicated_fields(invalid_dict)
+        expected_error_msg = "More than one value was found for repeated field 'version': ['v2', 'v3']"
         self.assertIn(expected_error_msg, str(cm.exception))
 
-        # test repeated fields
-        filename_template = "{folder}/{version}/{name}_{version}.{extension}"
-        pattern_dict = {
-            "folder": "[a-zA-Z_]+",
-            "version": "v[0-9]+",
-            "name": "[a-zA-Z_]+",
-            "extension": "txt",
+    def test_compile_path_regex(self):
+        filename_template = "{prefix}_{name}.{extension}"
+        fields = {
+            "prefix": FieldConf(pattern=r"[0-9]{4}"),
+            "name": FieldConf(pattern=r"[a-zA-Z0-9]+"),
+            "extension": FieldConf(pattern=r"json"),
         }
-        filename = "somewhere/v2/custom_name_v2.txt"
-        fields_dict = parse_fields(filename, filename_template, pattern_dict, raise_error=True)
-        expected_fields_dict = {
-            "folder": "somewhere",
-            "name": "custom_name",
-            "version": "v2",
-            "extension": "txt",
-        }
-        self.assertEqual(expected_fields_dict, fields_dict)
 
-        filename = "somewhere/v2/custom_name_v3.txt"
+        compiled_regex = compile_path_regex(filename_template, fields)
+        expected_pattern = r"^(?P<prefix>[0-9]{4})_(?P<name>[a-zA-Z0-9]+)\.(?P<extension>json)$"
+        self.assertEqual(expected_pattern, compiled_regex.pattern)
+
+        filename = "0001_example.json"
+        parsed_field_dict = compiled_regex.match(filename).groupdict()
+        expected_parsed_field_dict = {
+            "prefix": "0001",
+            "name": "example",
+            "extension": "json",
+        }
+        self.assertDictEqual(expected_parsed_field_dict, parsed_field_dict)
+
+        invalid_template = "{asset__name}.{extension}"
+        invalid_fields = {
+            "asset__name": FieldConf(pattern=r"[a-zA-Z0-9]+"),
+            "extension": FieldConf(pattern=r"json"),
+        }
+
         with self.assertRaises(ValueError) as cm:
-            parse_fields(filename, filename_template, pattern_dict, raise_error=True)
-        expected_error_msg = "More than one value was found for repeated field 'version': ['v2', 'v3']"
+            compile_path_regex(invalid_template, invalid_fields)
+        expected_error_msg = "Fields cannot contains double underscore: ['asset__name']"
         self.assertIn(expected_error_msg, str(cm.exception))
 
     def test_assign_groupname_pattern_dict(self):

@@ -43,46 +43,59 @@ def assign_groupname_pattern_dict(pattern_dict: dict[str:str]) -> dict[str:str]:
     return named_pattern_dict
 
 
-def parse_fields(
-    _string: str,
-    template: str,
-    pattern_dict: dict[str:str],
-    raise_error: bool = False,
-) -> dict[str:str]:
+def compile_path_regex(template: str, fields: dict[str:FieldConf], ds: str = "/") -> re.Pattern:
     """
-    Parse a string using a template and a patterns dictionary
+    Compile a regex pattern using a path template and a FieldConf dictionary
 
     Example:
         ```python
         filename_template = "{prefix}_{name}.{extension}"
-        pattern_dict = {"prefix": "[0-9]{4}", "name": "[a-zA-Z0-9]+", "extension": "json"}
+        fields = {
+            "prefix": FieldConf(pattern=r"[0-9]{4}"),
+            "name": FieldConf(pattern=r"[a-zA-Z0-9]+"),
+            "extension": FieldConf(pattern=r"json")
+        }
         filename = "0001_example.json"
-        parsed_filename_dict = parse_fields(filename, filename_template, pattern_dict)
-        invalid_filename = "invalid_example.json"
-        parse_fields(invalid_filename, filename_template, pattern_dict, raise_error=True)
+        compiled_regex = compile_path_regex(filename_template, fields)
+        compiled_regex.match(filename).groupdict()
         ```
 
     Params:
-        _string: String to be parsed.
-        template: A template that follows string.Formatter() syntax.
-        pattern_dict: A dictionary where each key represent a field of the template and each value is the
-                            corresponding regex pattern
-        raise_error: Raise an exception if the path is not valid. If False, it returns None.
+        template: A path template that follows `PathModel.template` syntax.
+        fields: A dictionary where each key represent a field of the template and each value represent its corresponding
+                `FieldConf()`.
+        ds: Directory separator string.
 
     Returns:
-        A dictionary of parsed fields.
+        A compiled regex pattern.
     """
     template_field_names = get_template_fields_names(template)
-    pattern_field_names = list(pattern_dict.keys())
-    check_expected_fields(template_field_names, pattern_field_names)
+    field_names = list(fields.keys())
+    check_expected_fields(template_field_names, field_names)
+
+    invalid_fields = [n for n in field_names if n.find("__") >= 0]
+
+    if len(invalid_fields) > 0:
+        raise ValueError(f"Fields cannot contains double underscore: {invalid_fields}")
+
+    template = template.replace(r".", r"\.")
+    pattern_dict = {}
+    for field_name, field_conf in fields.items():
+        field_pattern = field_conf.pattern
+        if field_conf.is_optional:
+            field_pattern = f"{field_pattern}|"
+            # Allow optional directory separator for this field: "/" -> "/?", by updating path_template
+            field_name_dir_sep = "{" + field_name + "}" + ds + "{"
+            optional_field_name_dir_sep = "{" + field_name + "}" + ds + "?{"
+            template = template.replace(field_name_dir_sep, optional_field_name_dir_sep)
+        pattern_dict[field_name] = field_pattern
 
     # Deduplicate repeated fields of pattern_dict:
-    # for example the template "/{base_path}/{asset_name}/{asset_name}_{suffix}"
-    # will become "/{base_path}/{asset_name__0}/{asset_name__1}_{suffix}"
+    # for example the template "{base_path}/{asset_name}/{asset_name}_{suffix}"
+    # will become "{base_path}/{asset_name__0}/{asset_name__1}_{suffix}"
     # and the dict {"base_path": r"\w+", "asset_name": r"\w+", "suffix": r"\d+"}
     # will become {"base_path": r"\w+", "asset_name__0": r"\w+", "asset_name__1": r"\w+", "suffix": r"\d+"}
     unique_fields = list(set(template_field_names))
-    deduplicated_fields_dict = {}
     new_pattern_dict = {}
     new_template = template
     for field_name in unique_fields:
@@ -90,13 +103,10 @@ def parse_fields(
         if field_count == 1:
             new_pattern_dict[field_name] = pattern_dict[field_name]
             continue
-        deduplicated_list = []
         for idx in range(field_count):
             new_field_name = field_name + f"__{idx}"
-            deduplicated_list.append(new_field_name)
             new_pattern_dict[new_field_name] = pattern_dict[field_name]
             new_template = new_template.replace("{" + field_name + "}", "{" + new_field_name + "}", 1)
-        deduplicated_fields_dict[field_name] = deduplicated_list
 
     has_duplicates = pattern_dict != new_pattern_dict
     if has_duplicates:
@@ -107,12 +117,51 @@ def parse_fields(
     named_pattern_dict = assign_groupname_pattern_dict(pattern_dict)
     path_pattern = template.format(**named_pattern_dict)
     path_pattern = f"^{path_pattern}$"  # match the full string
-    match = re.match(path_pattern, _string)
-    if not match:
-        if raise_error:
-            raise ValueError(f"Invalid string '{_string}', expected pattern: '{path_pattern}'")
-        return None
-    parsed_fields_dict = match.groupdict()
+    compiled_pattern = re.compile(path_pattern)
+    return compiled_pattern
+
+
+def fusion_deduplicated_fields(parsed_field_dict: dict[str, str]) -> dict[str, str]:
+    """
+    Fusion deduplicated fields in a parsed field dict
+
+    Example:
+        ```python
+        deduplicated_field_dict = {
+            "name": "data",
+            "version__0": "v1",
+            "version__1": "v1",
+            "ext": "csv",
+        }
+        fusioned_field_dict = fusion_deduplicated_fields(deduplicated_field_dict)
+        # {
+        #     "name": "data",
+        #     "version": "v1",
+        #     "ext": "csv",
+        # }
+        ```
+
+    Params:
+        parsed_field_dict: A dictionary where each key represent a field name. A deduplicated field will have a
+                           suffix `__{id}`.
+
+    Returns:
+        A dictionary where deduplicated fields are fusioned in a single field with the suffix removed.
+    """
+
+    deduplicated_regex = re.compile(r"^(?P<name>.+?)__(?P<id>\d)$")
+
+    deduplicated_fields_dict = {}
+
+    for field_name in parsed_field_dict:
+        match = deduplicated_regex.match(field_name)
+        if match is None:
+            continue
+        match_dict = match.groupdict()
+        original_field_name = match_dict["name"]
+        if original_field_name not in deduplicated_fields_dict:
+            deduplicated_fields_dict[original_field_name] = []
+        deduplicated_fields_dict[original_field_name].append(field_name)
 
     # Fusion deduplicated fields:
     # it will raise an error if the deduplicate fields have multiples values
@@ -122,19 +171,18 @@ def parse_fields(
     # for example {"base_path": "folder", "asset_name__0": "my_asset", "asset_name__1": "my_asset", "suffix": "001"}
     # to {"base_path": "folder", "asset_name": "my_asset", "suffix": "001"}
     for original_field_name, deduplicated_list in deduplicated_fields_dict.items():
-        parsed_field_values = [parsed_fields_dict.pop(f) for f in deduplicated_list]
+        parsed_field_values = [parsed_field_dict.pop(f) for f in deduplicated_list]
         unique_parsed_field_values = list(set(parsed_field_values))
         are_duplicated_unique = len(unique_parsed_field_values) == 1
         if not are_duplicated_unique:
             raise ValueError(
                 f"More than one value was found for repeated field '{original_field_name}': {parsed_field_values}"
             )
-        parsed_fields_dict[original_field_name] = unique_parsed_field_values[0]
+        parsed_field_dict[original_field_name] = unique_parsed_field_values[0]
+    return parsed_field_dict
 
-    return parsed_fields_dict
 
-
-def prepare_fields_values(fields_values_dict: dict[str:Any], fields_conf: dict[str, FieldConf]) -> dict[str:str]:
+def prepare_fields_values(fields_values_dict: dict[str, Any], fields_conf: dict[str, FieldConf]) -> dict[str, str]:
     """
     Prepare fields values for this path
 
@@ -176,7 +224,7 @@ def prepare_fields_values(fields_values_dict: dict[str:Any], fields_conf: dict[s
     return new_fields_values_dict
 
 
-def process_parsed_fields_values(fields_conf: dict[str, FieldConf], parsed_fields: dict[str:str]) -> dict[str:Any]:
+def process_parsed_fields_values(fields_conf: dict[str, FieldConf], parsed_fields: dict[str, str]) -> dict[str, Any]:
     """
     Process fields values dictionary obtained from parsing a file path
 
