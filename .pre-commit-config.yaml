@@ -8,3 +8,12 @@ repos:
       args: [ --fix ]
     # Run the formatter.
     - id: ruff-format
+- repo: local
+  hooks:
+    - id: run-tests
+      name: run python unittest
+      entry: uv run
+      args: [python, -m, unittest, discover, -s, tests/, -p, test_*.py]
+      language: system
+      types: [python]
+      pass_filenames: false
