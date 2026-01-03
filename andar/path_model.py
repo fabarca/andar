@@ -203,9 +203,15 @@ class PathModel:
         given_field_names = list(fields_values_dict.keys())
         check_expected_fields(template_field_names, given_field_names)
         fields_values_dict = prepare_fields_values(fields_values_dict, fields_conf)
-        new_path = template.format(**fields_values_dict)
-        new_path = os.path.normpath(new_path)
-        return new_path
+        built_path = template.format(**fields_values_dict)
+
+        # Clean path of duplicated slashes using normpath() when optional fields are present
+        normalized_path = os.path.normpath(built_path)
+        if built_path.startswith("./"):
+            # for preserving bijection of first field when field value is a dot `"."`
+            normalized_path = "./" + normalized_path
+
+        return normalized_path
 
     def get_path(self, **kwargs: Any) -> str:
         """

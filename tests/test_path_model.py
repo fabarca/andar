@@ -90,10 +90,23 @@ class PathModelTests(unittest.TestCase):
         }
         new_path_builder.assert_fields_bijection(input_fields)
 
+        # test relative base_path `.`:
+        test_relative_path = "./2025-02-01/MY_DATA_2025-02-01_123456.csv"
+        new_path_builder.assert_path_bijection(test_relative_path)
+        input_fields = {
+            "base_path": ".",
+            "intermediate_folder": custom_date,
+            "base_name": "my_data",
+            "suffix": custom_datetime,
+            "extension": "csv",
+        }
+        new_path_builder.assert_fields_bijection(input_fields)
+
     def test_optional_fields(self):
         optional_path_builder = PathModel(
-            template="/{base_path}/{env}/{intermediate_folder}/{base_name}_{suffix}.{extension}",
+            template="{base_path}/{env}/{intermediate_folder}/{base_name}_{suffix}.{extension}",
             fields={
+                "base_path": FieldConf(pattern=SafePatterns.DIRPATH),
                 "env": FieldConf(pattern=r"dev|preprod|prod|local", is_optional=True),
                 "suffix": FieldConf(pattern=SafePatterns.FIELD, is_optional=True),
             },
@@ -101,7 +114,7 @@ class PathModelTests(unittest.TestCase):
         # Test get_path
         test_path = optional_path_builder.get_path(
             env="dev",
-            base_path="parent_folder",
+            base_path="/parent_folder",
             intermediate_folder="sub_folder",
             base_name="my_data",
             suffix="suffix",
@@ -126,7 +139,7 @@ class PathModelTests(unittest.TestCase):
         # Test get_parent_path omitting a field in the parent_path
         test_parent_path = optional_path_builder.get_parent_path(
             # env="dev" is optional and can be omitted
-            base_path="parent_folder",
+            base_path="/parent_folder",
             intermediate_folder="sub_folder",
         )
         expected_test_parent_path = "/parent_folder/sub_folder"
@@ -135,7 +148,7 @@ class PathModelTests(unittest.TestCase):
         # Test get_parent_path omitting a field in the name
         test_path = optional_path_builder.get_path(
             env="dev",
-            base_path="parent_folder",
+            base_path="/parent_folder",
             intermediate_folder="sub_folder",
             base_name="my_data",
             # suffix="custom_suffix" is optional and can be omitted
@@ -146,7 +159,7 @@ class PathModelTests(unittest.TestCase):
 
         optional_path_builder.assert_path_bijection(expected_test_path)
         input_fields = {
-            "base_path": "parent_folder",
+            "base_path": "/parent_folder",
             "env": "dev",
             "intermediate_folder": "sub_folder",
             "base_name": "my_data",
