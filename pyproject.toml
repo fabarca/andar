@@ -1,10 +1,19 @@
 [project]
 name = "andar"
-version = "0.1.9"
+version = "0.1.10"
 description = "Provides an abstraction layer for creating and parsing paths in a programmatic way via templates."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: System :: Archiving",
+    "Topic :: Utilities",
+]
 
 [project.urls]
 repository = "https://github.com/fabarca/andar"
